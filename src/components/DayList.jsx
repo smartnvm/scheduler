@@ -2,8 +2,8 @@ import DayListItem from './DayListItem';
 import React from 'react';
 
 export default function DayList(props) {
-	console.log(props);
-	console.log('---------------------');
+	// console.log(props);
+	// console.log('---------------------');
 
   // Verbose way passing individual key = value
 	// const parsedDayList = props.days.map((day) => (

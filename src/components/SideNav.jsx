@@ -1,8 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import DayList from './DayList';
+
 
 function SideNav(props) {
 	
-  return (
+  //since the App needs to know the day in interviwer module
+  //we manage the state in parent component
+  const { days, day, setDay } = {...props}
+  console.log('----[sideNav Props]----\n',props);
+
+  
+	return (
 		<Fragment>
 			<img
 				className="sidebar--centered"
@@ -10,7 +18,11 @@ function SideNav(props) {
 				alt="Interview Scheduler"
 			/>
 			<hr className="sidebar__separator sidebar--centered" />
-			<nav className="sidebar__menu"></nav>
+			<nav className="sidebar__menu">
+      <DayList days={days} day={day} setDay={setDay} />
+        
+			</nav>
+
 			<img
 				className="sidebar__lhl sidebar--centered"
 				src="images/lhl.png"
