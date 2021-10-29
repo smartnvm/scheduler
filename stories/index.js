@@ -14,6 +14,7 @@ import Appointment from "components/Appointment/index.js";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
 
 //dummy data file
 import days from '../src/data/days';
@@ -150,4 +151,8 @@ storiesOf("Appointment", module)
     interviewer={interviewer}
     onEdit={action("Edit")}
     onDelete={action("Delete")}
-  />);
+  />)
+  .add("Confirm", () => <Confirm
+  onCancel={action("Cancel")}
+  onConfirm={action("Confirm")}
+/>);

@@ -1,7 +1,7 @@
 import React from 'react';
 
 //constants
-import {images} from './AppointmentVars'
+import {images} from '../../data/AppointmentVars'
 
 export default function Header(props) {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 //constants 
-import { images } from './AppointmentVars';
-import days from '../../data/days'
+import { images } from '../../data/AppointmentVars';
+
 
 export default function Show(props) {
 	const { student, interviewer, onEdit, onDelete } = props;
