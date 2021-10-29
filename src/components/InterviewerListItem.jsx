@@ -4,7 +4,7 @@ import 'components/InterviewerListItem.scss';
 import classNames from 'classnames';
 
 export default function InterviewerListItem(props) {
-	const { name, avatar, selected, setInterviewer } = props;
+	const { name, avatar, selected, setInterviewer, id } = props;
 
   console.log('----[InterviewerListItem Props]----\n',props);
 
@@ -17,14 +17,14 @@ export default function InterviewerListItem(props) {
 
   
 	const handleInterviewer = () => {
-		setInterviewer(name);
+		// setInterviewer(name);
+    console.log(id)
 	};
 
 	// console.log(dayList);
 	return (
-		<li className={interviewersList}>
+		<li className={interviewersList} onClick={handleInterviewer}>
       <img
-        onClick={handleInterviewer}
 				className="interviewers__item-image"
 				src={avatar}
 				alt={name}
