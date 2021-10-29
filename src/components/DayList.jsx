@@ -21,16 +21,18 @@ export default function DayList(props) {
 
   // here we assemble the props object first, i.e. var = {}
   // require to spread the object props prior to passing {...vars} 
-	const parsedDayList = props.days.map((day) => {
+	const {days, day, setDay} = props
+  const parsedDayList = days.map((elem) => {
 		const vars = {
 			// Warning: Each child in a list should have a unique "key" prop.
-			key: day.id,
+			key: elem.id,
 
-			//for DayListItem(props)
-			name: day.name,
-			spots: day.spots,
-			setDay: props.setDay,
-			selected: day.name === props.day,
+      //for DayListItem(props) 
+      //const { name, spots, setDay, selected } = props;
+			name: elem.name,
+			spots: elem.spots,
+			setDay: setDay,
+			selected: elem.name === day,
 		};
 
     return (

@@ -14,7 +14,7 @@ export default function DayListItem(props) {
 		{ 'day-list__item--selected': selected }
 	);
 
-	function handleDay() {
+	const handleDay = () => {
 		setDay(name);
 	}
 
