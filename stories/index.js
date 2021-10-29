@@ -11,7 +11,8 @@ import DayListItem from "components/DayListItem.jsx";
 import InterviewerList from "components/InterviewerList";
 
 import Appointment from "components/Appointment/index.js";
-
+import Header from "components/Appointment/Header.jsx";
+import Empty from "components/Appointment/Empty";
 
 //dummy data file
 import days from '../src/data/days';
@@ -134,10 +135,13 @@ storiesOf("InterviewerList", module)
     />
   ));
 
-
 storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />);
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Header", () => <Header time="12pm" />)
+  .add("Empty", () => <Empty
+    onAdd={action("setDay")}
+    time="12pm" />);

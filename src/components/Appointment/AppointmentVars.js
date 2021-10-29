@@ -1,0 +1,1 @@
+export const addIcon = "images/add.png"
