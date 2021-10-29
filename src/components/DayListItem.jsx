@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 export default function DayListItem(props) {
 	// console.log(props);
-	const { name, spots, setDay, selected } = props;
+	const { name, spots, onChange, selected } = props;
 	let dayList = 'day-list__item';
 
 	dayList = classNames(
@@ -15,7 +15,7 @@ export default function DayListItem(props) {
 	);
 
 	const handleDay = () => {
-		setDay(name);
+		onChange(name);
 	}
 
 	// console.log(dayList);

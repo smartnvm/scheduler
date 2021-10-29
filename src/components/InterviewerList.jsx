@@ -4,7 +4,7 @@ import 'components/InterviewerListItem.scss';
 import InterviewerListItem from './InterviewerListItem';
 
 export default function InterviewerList(props) {
-	const { interviewers, interviewer, setInterviewer } = props;
+	const { interviewers, value, onChange } = props;
 
 	const parsedInterviewersList = interviewers.map((elem) => {
 		const vars = {
@@ -12,12 +12,12 @@ export default function InterviewerList(props) {
 			key: elem.id,
 
 			// InterviewerListItem(props)
-      // const { name, avatar, selected, setInterviewer } 
+      // const { name, avatar, selected, onChange } 
       name: elem.name,
       id: elem.id,
       avatar: elem.avatar,
-      selected: interviewer === elem.id,
-      setInterviewer: setInterviewer,
+      selected: value === elem.id,
+      onChange: onChange,
 
 		};
     console.log('----[InterviewerList vars]-------',vars);

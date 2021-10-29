@@ -4,7 +4,7 @@ import 'components/InterviewerListItem.scss';
 import classNames from 'classnames';
 
 export default function InterviewerListItem(props) {
-	const { name, avatar, selected, setInterviewer, id } = props;
+	const { name, avatar, selected, onChange, id } = props;
 
   console.log('----[InterviewerListItem Props]----\n',props);
 
@@ -17,8 +17,8 @@ export default function InterviewerListItem(props) {
 
   
 	const handleInterviewer = () => {
-		// setInterviewer(name);
-    console.log(id)
+		onChange(name);
+    //console.log(onChange())
 	};
 
 	return (
