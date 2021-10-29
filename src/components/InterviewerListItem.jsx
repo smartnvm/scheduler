@@ -21,7 +21,6 @@ export default function InterviewerListItem(props) {
     console.log(id)
 	};
 
-	// console.log(dayList);
 	return (
 		<li className={interviewersList} onClick={handleInterviewer}>
       <img
