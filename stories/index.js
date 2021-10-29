@@ -155,4 +155,5 @@ storiesOf("Appointment", module)
   .add("Confirm", () => <Confirm
   onCancel={action("Cancel")}
   onConfirm={action("Confirm")}
-/>);
+  message="Delete the appointment?"
+  />);
