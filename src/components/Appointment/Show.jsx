@@ -1,11 +1,11 @@
 import React from 'react';
 //constants 
-import { images } from '../../data/AppointmentVars';
+import { icons } from '../../data/AppointmentVars';
 
 
 export default function Show(props) {
 	const { student, interviewer, onEdit, onDelete } = props;
-  console.log(images);
+  console.log(icons);
 
   const handleEdit = ()=> {
     onEdit()
@@ -29,13 +29,13 @@ export default function Show(props) {
 					<img
 						className="appointment__actions-button"
 						onClick={handleEdit}
-						src={images.editIcon}
+						src={icons.edit}
 						alt="Edit"
 					/>
 					<img
 						className="appointment__actions-button"
 						onClick = {handleDelete}
-            src={images.deleteIcon}
+            src={icons.delete}
 						alt="Delete"
 					/>
 				</section>

@@ -1,7 +1,9 @@
-export const images = {
-  addIcon : "images/add.png",
-  editIcon: "images/edit.png",
-  deleteIcon: "images/trash.png",
+export const icons = {
+  add : "images/add.png",
+  edit: "images/edit.png",
+  delete: "images/trash.png",
+  status: "images/status.png",
+  close: "images/close.png"
   
 }
 

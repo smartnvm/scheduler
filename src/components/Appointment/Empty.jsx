@@ -1,7 +1,7 @@
 import React from 'react';
 
 //constants
-import {images} from '../../data/AppointmentVars'
+import {icons} from '../../data/AppointmentVars'
 
 export default function Header(props) {
 
@@ -9,7 +9,7 @@ export default function Header(props) {
 	return (
 		<main className="appointment__add" onClick={onAdd}>
       <img className="appointment__add-button"
-        src= {images.addIcon}
+        src= {icons.add}
         alt="Add" />
 		</main>
 	);

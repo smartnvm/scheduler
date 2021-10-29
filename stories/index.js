@@ -15,6 +15,8 @@ import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
+import Error from "components/Appointment/Error";
 
 //dummy data file
 import days from '../src/data/days';
@@ -138,7 +140,7 @@ storiesOf("InterviewerList", module)
 
 storiesOf("Appointment", module)
   .addParameters({
-    backgrounds: [{ name: "white", value: "#fff", default: true }]
+     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
@@ -153,7 +155,14 @@ storiesOf("Appointment", module)
     onDelete={action("Delete")}
   />)
   .add("Confirm", () => <Confirm
-  onCancel={action("Cancel")}
-  onConfirm={action("Confirm")}
-  message="Delete the appointment?"
+    onCancel={action("Cancel")}
+    onConfirm={action("Confirm")}
+    message="Delete the appointment?"
+  />)
+  .add("Status", () => <Status
+    message="Deleting..."
+  />)
+  .add("Error", () => <Error
+    message="Could not delete appointment."
   />);
+
