@@ -16,5 +16,6 @@ const days = [
   },
 ];
 
-// module.export(days)
-export default days;
+// module.export(days) ---> node
+// export const (days) ---> imported by React components
+export default days;  //--> needed for Storybook to work

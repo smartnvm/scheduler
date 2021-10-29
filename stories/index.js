@@ -11,8 +11,9 @@ import DayListItem from "components/DayListItem.jsx";
 import InterviewerList from "components/InterviewerList";
 
 import Appointment from "components/Appointment/index.js";
-import Header from "components/Appointment/Header.jsx";
+import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
 
 //dummy data file
 import days from '../src/data/days';
@@ -120,7 +121,6 @@ storiesOf("InterviewerList", module)
       interviewers={interviewers}
     />
   ))
-
   .add("Selected", () => (
     <InterviewerList
       interviewers={interviewers}
@@ -144,4 +144,10 @@ storiesOf("Appointment", module)
   .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty
     onAdd={action("setDay")}
-    time="12pm" />);
+    time="12pm" />)
+  .add("Show", () => <Show
+    student="Lydia Miller-Jones"
+    interviewer={interviewer}
+    onEdit={action("Edit")}
+    onDelete={action("Delete")}
+  />);
