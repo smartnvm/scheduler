@@ -17,7 +17,7 @@ export default function InterviewerListItem(props) {
 
   
 	const handleInterviewer = () => {
-		onChange(name);
+		onChange(id);
     //console.log(onChange())
 	};
 
