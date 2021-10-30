@@ -9,6 +9,7 @@ import Button from "components/Button.jsx";
 import DayList from 'components/DayList.jsx';
 import DayListItem from "components/DayListItem.jsx";
 import InterviewerList from "components/InterviewerList";
+import InterviewerListItem from "components/InterviewerListItem";
 
 import Appointment from "components/Appointment/index.js";
 import Header from "components/Appointment/Header";
@@ -21,7 +22,7 @@ import Form from "components/Appointment/Form";
 
 //dummy data file
 import days from '../src/data/days';
-import InterviewerListItem from "components/InterviewerListItem";
+import appointments from '../src/data/appointments';
 // const days = require('../src/data/days') //this does not work
 
 storiesOf("Button", module)
