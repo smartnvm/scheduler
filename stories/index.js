@@ -17,6 +17,7 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 //dummy data file
 import days from '../src/data/days';
@@ -140,7 +141,7 @@ storiesOf("InterviewerList", module)
 
 storiesOf("Appointment", module)
   .addParameters({
-     backgrounds: [{ name: "white", value: "#fff", default: true }]
+    backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
@@ -164,5 +165,19 @@ storiesOf("Appointment", module)
   />)
   .add("Error", () => <Error
     message="Could not delete appointment."
+  />)
+  .add("Edit Form", () => <Form
+    student='AJ'
+    interviewer={3}
+    interviewers={interviewers}
+    onSave={() => action("Save")(interviewer.id)}
+    onCancel={() => action("Cancel")(interviewer.id)}
+  />)
+  .add("Create Form", () => <Form
+    interviewers={interviewers}
+    onSave={action("Save")}
+    onCancel={action("Cancel")}
+    // onChange={action("setInterviewer")}
   />);
+
 
