@@ -24,12 +24,16 @@ export default function Form(props) {
   const fnInput = (event) => {
      setStudent(event.target.value)
   }
+
+  const fnsetInterviewer = (name) => {
+    setInterviewer(prev => name)
+ }
 	// InterviewerList(props)
 	// const { interviewers, value, onChange }
 	const vars = {
 		interviewers: interviewers,
 		value: interviewer,
-		onChange: setInterviewer,
+		onChange: fnsetInterviewer,
 	};
 
   console.log('---[Form Vars]....',vars);

@@ -14,8 +14,11 @@ export default function DayListItem(props) {
 		{ 'day-list__item--selected': selected }
 	);
 
+  // Now we invoke onChange functionw onClick event
 	const handleDay = () => {
-		onChange(name);
+    // pass (name) to onChange function reference
+    // prevents a day with 0 spots to be clicked
+    if (spots > 0) onChange(name);
 	}
 
 	// console.log(dayList);

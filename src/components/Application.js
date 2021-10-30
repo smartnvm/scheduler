@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 
-import 'components/Application.scss';
-import 'components/Appointment';
-
-import days from '../data/days';
-import appointments from '../data/appointments';
+//dummy data source
+import dayList from '../data/days';
+import appointmentLists from '../data/appointments';
 
 import SideNav from './SideNav';
 import Appointment from 'components/Appointment';
+import 'components/Application.scss';
 
 export default function Application(props) {
   //iniitalize day to Monday
   const [day, setDay] = useState('Monday');
 
-  //SideNav child component properties required
-  //<DayList days={days} day={day} setDay={setDay} />
-  const sideNavProps = {
-    days,
-    day,
-    setDay,
+  const fnSetDay = (param) => {
+    setDay(prev => param);
   };
-  ;
 
-  const parsedAppointments = appointments.map((e) => {
+  //SideNav child component properties required
+  //<DayList daysList={daysList} day={day} setDay={setDay} />
+  const sideNavProps = {
+    dayList,
+    day,
+    onChange: fnSetDay
+  };
+
+  const parsedAppointments = appointmentLists.map((e) => {
     const appointment = {
       key: e.id,
       time: e.time,
-      interview:e.interview
+      interview: e.interview
     };
     return <Appointment {...appointment} />;
   });
