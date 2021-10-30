@@ -8,11 +8,11 @@ export default function Show(props) {
   console.log(icons);
 
   const handleEdit = ()=> {
-    onEdit()
+    onEdit(interviewer)
   }
 
   const handleDelete = () => {
-    onDelete()
+    onDelete(interviewer)
   }
 
 	return (
