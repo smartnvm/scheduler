@@ -97,7 +97,8 @@ storiesOf("InterviewerListItem", module)
     <InterviewerListItem
       name={interviewer.name}
       avatar={interviewer.avatar}
-      onChange={() => action("setInterviewer")(interviewer.id)}
+      // onChange={() => action("setInterviewer")(interviewer.id)}
+      onChange={() => action("setInterviewer")}
     />
   ));
 //  .add("Clickable", () => (
@@ -171,8 +172,10 @@ storiesOf("Appointment", module)
     student='AJ'
     interviewer={3}
     interviewers={interviewers}
-    onSave={() => action("Save")(interviewer.id)}
-    onCancel={() => action("Cancel")(interviewer.id)}
+    // onSave={() => action("Save")(interviewer.id)}
+    // onCancel={() => action("Cancel")(interviewer.id)}
+    onSave={() => action("Save")}
+    onCancel={() => action("Cancel")}
   />)
   .add("Create Form", () => <Form
     interviewers={interviewers}
