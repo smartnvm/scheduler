@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
 //dummy data source
 // import dayList from '../data/days';
-import appointmentLists from '../data/appointments';
+// import dailyAppointments from '../data/appointments';
 
 import SideNav from './SideNav';
 import Appointment from 'components/Appointment';
 import Button from 'components/Button';
 
 import 'components/Application.scss';
+import { cleanup } from '@testing-library/react/dist';
+
+//helper functions
+import { getDayAppointments } from 'helpers/selectors';
 
 export default function Application(props) {
 
@@ -23,6 +27,8 @@ export default function Application(props) {
     interviewers: {},
   });
 
+  let dailyAppointments = [];
+
   const fnSetDay = (param) => {
     setState(prev => (
       { ...prev, day: param }
@@ -30,12 +36,32 @@ export default function Application(props) {
   };
 
   //fetch must be state variable for dependcy array and re-rendering to work
-  //i.e. can't simply declare fetch = 0 and toggle its value in resetdB
+  //i.e. can't simply declare fetch = 0 and toggle its value in apiCall
   const [fetch, setFetch] = useState('0');
   const resetdB = () => {
-    axios.get('http://localhost:8001/api/debug/reset')
+    apiCall('reset');
+  };
+
+  const apiCall = (param) => {
+    let apiURL = '';
+    switch (param) {
+      case 'days':
+        apiURL = 'http://localhost:8001/api/days';
+        break;
+      case 'appts':
+        apiURL = 'http://localhost:8001/api/appointments/1';
+        break;
+      case 'reset':
+        apiURL = 'http://localhost:8001/api/debug/reset';
+        break;
+      default:
+        break;
+    }
+    // console.log(param, '\n', apiURL);
+
+    axios.get(apiURL)
       .then((res) => {
-        console.log('[dB Reset]', res.data);
+        console.log(`[${param}]`, res.data);
         //reset day 
         setState(prev => ({ ...prev, day: "Monday" }));
         //toggle fetch for useEffect dependency array
@@ -47,12 +73,19 @@ export default function Application(props) {
       });
   };
 
+  // useRender()
+
+  // function useRender() {
+  // const [fetch, setFetch] = useState('0');
+  // setFetch(prev => prev ^= 1)
   useEffect(() => {
+    //fetch data with API call 
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
     ]).then((all) => {
+      //update props with new data
       setState((prev) => ({
         ...prev,
         days: all[0].data,
@@ -60,18 +93,26 @@ export default function Application(props) {
         interviewers: all[2].data,
       }));
     });
+    
+    return cleanup();
+    //fetch state change causes re-rendering
   }, [fetch]);
+  // }
 
 
   //SideNav child component properties required
   //<DayList daysList={daysList} day={day} setDay={setDay} />
+  //update 
   const sideNavProps = {
     dayList: state.days,
     day: state.day,
     onChange: fnSetDay
   };
 
-  const parsedAppointments = appointmentLists.map((e) => {
+  dailyAppointments = getDayAppointments(state, state.day);
+
+
+  const parsedAppointments = dailyAppointments.map((e) => {
     const appointment = {
       key: e.id,
       time: e.time,
@@ -81,8 +122,10 @@ export default function Application(props) {
   });
 
 
-
-
+  // console.log('0000000000000',dailyAppointments)
+  // dailyAppointments.push(<Appointment key="last" time="5pm" />);
+  //              //  .push(<Appointment key="last" time="5pm" />)
+  // console.log('1111111111111',dailyAppointments)
   return (
     <main className="layout">
       <section className="sidebar">
@@ -90,8 +133,19 @@ export default function Application(props) {
       </section>
 
       <section className="schedule">
-        {parsedAppointments}
+        <>
+          {/* <Appointment key="lasta" time="9am" />
+          <Appointment key="lastb" time="10am" />
+          <Appointment key="lastc" time="11am" /> */}
+          {parsedAppointments}
+
+          {/* to show last interview - does not work with push ? */}
+
+          <Appointment key="lastd" time="5pm" />
+          {/* <Appointment key="laste" time="6pm" /> */}
+        </>
       </section>
+
       <span>
         <Button danger onClick={resetdB}> dB Reset </Button>
       </span>
