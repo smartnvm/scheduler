@@ -5,7 +5,7 @@ import { icons } from '../../data/AppointmentVars';
 
 export default function Show(props) {
 	const { student, interviewer, onEdit, onDelete } = props;
-  console.log(icons);
+  // console.log(icons);
 
   const handleEdit = ()=> {
     onEdit(interviewer)

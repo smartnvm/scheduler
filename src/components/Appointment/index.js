@@ -30,7 +30,7 @@ export default function Appointment(props) {
 		showProps.onDelete = fnDelete;
 	}
 
-	console.log('------[showProps]-----', showProps);
+	// console.log('------[showProps]-----', showProps);
 	const timeSlots = ['12pm', '1pm', '2pm', '3pm', '4pm'];
 	return (
 		<>
