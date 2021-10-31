@@ -37,7 +37,7 @@ export default function Appointment(props) {
 			<Header time={time} />
 			<article className="appointment">
         {interview && <Show {...showProps} />}
-        {timeSlots.includes(time) && <Empty onAdd={fnAdd} time={time} />}
+        {timeSlots.includes(time) && !interview && <Empty onAdd={fnAdd} time={time} />}
 			</article>
 		</>
 	);
