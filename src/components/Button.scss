@@ -36,6 +36,12 @@
   background-color: transparent;
 }
 
+.button--warning {
+  color: $error-color;
+  border-color: $error-color;
+  background-color: transparent;
+}
+
 .button--danger:hover {
   color: $white;
   background-color: $danger-color;
@@ -44,6 +50,10 @@
 .button--confirm:hover {
   color: $white;
   background-color: $confirm-color;
+}
+.button--warning:hover {
+  color: $white;
+  background-color: $error-color;
 }
 
 .button:last-of-type {

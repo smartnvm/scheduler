@@ -41,6 +41,12 @@ export default function Application(props) {
   const resetdB = () => {
     apiCall('reset');
   };
+  const fetchDays = () => {
+    apiCall('days');
+  };
+  const fetchAppts = () => {
+    apiCall('appts');
+  };
 
   const apiCall = (param) => {
     let apiURL = '';
@@ -49,19 +55,17 @@ export default function Application(props) {
         apiURL = 'http://localhost:8001/api/days';
         break;
       case 'appts':
-        apiURL = 'http://localhost:8001/api/appointments/1';
-        break;
-      case 'reset':
-        apiURL = 'http://localhost:8001/api/debug/reset';
+        apiURL = 'http://localhost:8001/api/appointments/';
         break;
       default:
+        apiURL = 'http://localhost:8001/api/debug/reset';
         break;
     }
     // console.log(param, '\n', apiURL);
 
     axios.get(apiURL)
       .then((res) => {
-        console.log(`[${param}]`, res.data);
+        console.log(`[${param}]\n`, res.data);
         //reset day 
         setState(prev => ({ ...prev, day: "Monday" }));
         //toggle fetch for useEffect dependency array
@@ -93,7 +97,7 @@ export default function Application(props) {
         interviewers: all[2].data,
       }));
     });
-    
+
     return cleanup();
     //fetch state change causes re-rendering
   }, [fetch]);
@@ -141,13 +145,15 @@ export default function Application(props) {
 
           {/* to show last interview - does not work with push ? */}
 
-          <Appointment key="lastd" time="5pm" />
+          <Appointment key="last" time="5pm" />
           {/* <Appointment key="laste" time="6pm" /> */}
         </>
       </section>
 
       <span>
         <Button danger onClick={resetdB}> dB Reset </Button>
+        <Button confirm onClick={fetchDays}> fetch Days </Button>
+        <Button warning onClick={fetchAppts}> fetch Appts </Button>
       </span>
 
     </main>

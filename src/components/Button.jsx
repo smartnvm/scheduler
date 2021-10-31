@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import 'components/Button.scss';
 
 export default function Button(props) {
-  const { confirm, danger, disabled, onClick } = props;
+  const { confirm, danger, disabled, warning, onClick } = props;
   // console.log(props);
   //base button class
   let buttonClass = 'button';
@@ -17,7 +17,8 @@ export default function Button(props) {
 
    buttonClass = (classNames(buttonClass,
     { 'button--confirm': confirm },
-    { 'button--danger': danger }))
+     { 'button--warning': warning },
+     { 'button--danger': danger }))
   
   // console.log(buttonClass)
 
