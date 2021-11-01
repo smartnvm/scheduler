@@ -23,6 +23,7 @@ export default function Appointment(props) {
 
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
+  console.log('zzzzzzzzzzzzzzzzzzzzz', props)
 
 
   const fnAdd = (param) => {
@@ -44,33 +45,23 @@ export default function Appointment(props) {
       interviewer
     };
 
-    console.log('zzzzzzzzzzzzzzzzzzzzz', interview)
-
     //updating old state variable wiht new appointment info
-
-    bookInterview(id, interview)
+    bookInterview(id, interview)  
+    transition(SHOW);
     
-       transition(SHOW);
-    // then(() => {
-    // })
-
-    //re-render with interview = new 
-
-    //interview is null 
-    // console.log('--------------------state :', interview);
   }
 
-  // let showProps = {};
-  
-    // const showProps = {
-    //   key: id,
-    //   interviewer:interview.interviewer,
-    //   student:interview.student,
-    //   onEdit: fnEdit,
-    //   onDelete: fnDelete
-    // };
-  
-
+  let showProps = {};
+    if (mode===SHOW) {
+     showProps = {
+      key: id,
+      interviewer: interview.interviewer,
+      student: interview.student,
+      onEdit: fnEdit,
+      onDelete: fnDelete
+    
+    };
+  }
 
   const formProps = {
     interviewers: interviewers,
@@ -86,16 +77,15 @@ export default function Appointment(props) {
       <Header time={time} />
       <article className="appointment">
         {mode === EMPTY && <Empty onAdd={fnAdd} time={time} />}
+        {(mode === SHOW) && <Show {...showProps} />}
+        {(mode === CREATE) && <Form {...formProps} />}
         
-        {mode === SHOW && <Show
+        {/* {mode === SHOW && <Show
           interviewer={interview.interviewer}
           student={interview.student}
           onEdit={fnEdit}
           onDelete={fnDelete}
-         />
-        }
-        {/* {(mode === SHOW) && <Show {...showProps} />} */}
-        {(mode === CREATE) && <Form {...formProps} />}
+         />} */}
       </article>
     </>
   );

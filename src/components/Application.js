@@ -19,17 +19,19 @@ import { fetchData } from 'helpers/api';
 export default function Application(props) {
   //iniitalize app Vars and set day to Monday
   const [vars, setVars] = useState({
-    day: "Monday",
+    day: "",
     days: [],
-    appointments: {},
-    interviewers: {},
+    appointments: {
+      "1": {
+        id: 1,
+        time: "12pm",
+        interview: null
+      }
+    },
+    interviewers: {}
   });
 
-  const fnSetDay = (param) => {
-    setVars(prev => (
-      { ...prev, day: param }
-    ));
-  };
+  console.log(vars);
 
   const resetdB = () => {
     apiCall('reset');
@@ -94,6 +96,12 @@ export default function Application(props) {
   }, [fetch]);
 
 
+
+  const fnSetDay = (param) => {
+    setVars(prev => (
+      { ...prev, day: param }
+    ));
+  };
   //SideNav child component properties required
   //<DayList daysList={daysList} day={day} setDay={setDay} />
   //update 
@@ -103,15 +111,42 @@ export default function Application(props) {
     onChange: fnSetDay
   };
 
+
+  function bookInterview(id, interview) {
+    // console.log(id, interview);
+
+    const appointment = {
+      ...vars.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...vars.appointments,
+      [id]: appointment
+    };
+
+    console.log(vars.appointments[id])
+
+    setVars({ 
+      ...vars,
+      appointments
+    });
+
+    console.log(vars.appointments[id])
+
+  }
+
   const dailyAppointments = getAppointmentsForDay(vars, vars.day);
   const interviewers = getInterviewersForDay(vars, vars.day);
 
   const parsedAppointments = dailyAppointments.map((e) => {
     const appointment = {
       key: e.id,
+      id: e.id,
       time: e.time,
       interview: getInterview(vars, e.interview),
-      interviewers
+      interviewers,
+      bookInterview: bookInterview
     };
     return <Appointment {...appointment} />;
   });
