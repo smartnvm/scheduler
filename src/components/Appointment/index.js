@@ -17,11 +17,12 @@ const CREATE = "CREAT";
 export default function Appointment(props) {
 
 
-  const { time, interview, interviewers } = props;
+  const { time, interview, interviewers, bookInterview, id } = props;
 
   // console.log('form interview', interview)
-  
+
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
+
 
 
   const fnAdd = (param) => {
@@ -37,19 +38,46 @@ export default function Appointment(props) {
     console.log(param);
   };
 
-  const fnSave = (param) => {
-    console.log(param);
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+
+    console.log('zzzzzzzzzzzzzzzzzzzzz', interview)
+
+    //updating old state variable wiht new appointment info
+
+    bookInterview(id, interview)
+    
+       transition(SHOW);
+    // then(() => {
+    // })
+
+    //re-render with interview = new 
+
+    //interview is null 
+    // console.log('--------------------state :', interview);
+  }
+
+  // let showProps = {};
+  
+    // const showProps = {
+    //   key: id,
+    //   interviewer:interview.interviewer,
+    //   student:interview.student,
+    //   onEdit: fnEdit,
+    //   onDelete: fnDelete
+    // };
+  
+
+
+  const formProps = {
+    interviewers: interviewers,
+    onSave: save,
+    onCancel: () => back()
   };
 
-
-  let showProps = {}
-  if (interview) {
-    showProps.key = props.id;
-    showProps.interviewer = interview.interviewer;
-    showProps.student = interview.student;
-    showProps.onEdit = fnEdit;
-    showProps.onDelete = fnDelete;
-  }
 
   // console.log('------[showProps]-----', showProps);
   const timeSlots = ['12pm', '1pm', '2pm', '3pm', '4pm'];
@@ -57,11 +85,20 @@ export default function Appointment(props) {
     <>
       <Header time={time} />
       <article className="appointment">
-        {mode === EMPTY  && <Empty onAdd={fnAdd} time={time} />}
-        {(mode === SHOW && interview )&& <Show {...showProps} />}
-        {(mode === CREATE  )&& <Form
-          interviewers={interviewers} onSave={fnSave}  onCancel={() => back()} />}
+        {mode === EMPTY && <Empty onAdd={fnAdd} time={time} />}
+        
+        {mode === SHOW && <Show
+          interviewer={interview.interviewer}
+          student={interview.student}
+          onEdit={fnEdit}
+          onDelete={fnDelete}
+         />
+        }
+        {/* {(mode === SHOW) && <Show {...showProps} />} */}
+        {(mode === CREATE) && <Form {...formProps} />}
       </article>
     </>
   );
 }
+
+
