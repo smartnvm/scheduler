@@ -12,8 +12,9 @@ export default function Header(props) {
   }
 
 	return (
-		<main className="appointment__add" onClick={fnAdd}>
+		<main className="appointment__add" >
       <img className="appointment__add-button"
+        onClick={fnAdd}
         src= {icons.add}
         alt="Add" />
 		</main>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 //dummy data source
@@ -13,31 +13,24 @@ import 'components/Application.scss';
 import { cleanup } from '@testing-library/react/dist';
 
 //helper functions
-import { getDayAppointments } from 'helpers/selectors';
+import { getAppointmentsForDay, getInterviewersForDay, getInterview } from 'helpers/selectors';
+import { fetchData } from 'helpers/api';
 
 export default function Application(props) {
-
-  //iniitalize day to Monday
-  // const [day, setDay] = useState([]);
-
-  const [state, setState] = useState({
+  //iniitalize app Vars and set day to Monday
+  const [vars, setVars] = useState({
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {},
   });
 
-  let dailyAppointments = [];
-
   const fnSetDay = (param) => {
-    setState(prev => (
+    setVars(prev => (
       { ...prev, day: param }
     ));
   };
 
-  //fetch must be state variable for dependcy array and re-rendering to work
-  //i.e. can't simply declare fetch = 0 and toggle its value in apiCall
-  const [fetch, setFetch] = useState('0');
   const resetdB = () => {
     apiCall('reset');
   };
@@ -48,79 +41,77 @@ export default function Application(props) {
     apiCall('appts');
   };
 
-  const apiCall = (param) => {
-    let apiURL = '';
-    switch (param) {
-      case 'days':
-        apiURL = 'http://localhost:8001/api/days';
-        break;
-      case 'appts':
-        apiURL = 'http://localhost:8001/api/appointments/';
-        break;
-      default:
-        apiURL = 'http://localhost:8001/api/debug/reset';
-        break;
-    }
-    // console.log(param, '\n', apiURL);
+  const [fetch, setFetch] = useState(0);
 
-    axios.get(apiURL)
+  const apiCall = (param) => {
+    const apiURL = {
+      days: 'http://localhost:8001/api/days/',
+      appts: 'http://localhost:8001/api/appointments/',
+      reset: 'http://localhost:8001/api/debug/reset'
+    };
+    console.log(param, '\n', apiURL[param]);
+
+    axios.get(apiURL[param])
       .then((res) => {
-        console.log(`[${param}]\n`, res.data);
-        //reset day 
-        setState(prev => ({ ...prev, day: "Monday" }));
-        //toggle fetch for useEffect dependency array
-        //this allows re-render page with new data
+        // console.log('------ [old] --------', vars.day );
+        return res;
+      })
+      .then(res => {
+        // console.log(res.data);
+        // fetchData()
+        //   .then(all => {
+        //     setVars((prev) => ({
+        //       ...prev,
+        //       day: 'Monday',
+        //       days: all[0].data,
+        //       appointments: all[1].data,
+        //       interviewers: all[2].data,
+        //     }));
+        //   });
         setFetch(prev => prev ^= 1);
+        // console.log('------ [fetch] --------', vars.day);
       })
       .catch((error) => {
         console.log(`Error: ${error}`);
       });
   };
 
-  // useRender()
-
-  // function useRender() {
   // const [fetch, setFetch] = useState('0');
   // setFetch(prev => prev ^= 1)
   useEffect(() => {
     //fetch data with API call 
-    Promise.all([
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers"),
-    ]).then((all) => {
-      //update props with new data
-      setState((prev) => ({
-        ...prev,
-        days: all[0].data,
-        appointments: all[1].data,
-        interviewers: all[2].data,
-      }));
-    });
-
+    fetchData()
+      .then(all =>
+        setVars((prev) => ({
+          ...prev,
+          days: all[0].data,
+          appointments: all[1].data,
+          interviewers: all[2].data,
+        })))
+      .catch((error) => console.log(`ERROR ${error}`));
     return cleanup();
-    //fetch state change causes re-rendering
+    //fetch vars change causes re-rendering
   }, [fetch]);
-  // }
 
 
   //SideNav child component properties required
   //<DayList daysList={daysList} day={day} setDay={setDay} />
   //update 
   const sideNavProps = {
-    dayList: state.days,
-    day: state.day,
+    dayList: vars.days,
+    day: vars.day,
     onChange: fnSetDay
   };
 
-  dailyAppointments = getDayAppointments(state, state.day);
-
+  const dailyAppointments = getAppointmentsForDay(vars, vars.day);
+  const interviewers = getInterviewersForDay(vars, vars.day);
 
   const parsedAppointments = dailyAppointments.map((e) => {
     const appointment = {
       key: e.id,
       time: e.time,
-      interview: e.interview
+      interview: getInterview(vars, e.interview),
+      interviewers
     };
     return <Appointment {...appointment} />;
   });
