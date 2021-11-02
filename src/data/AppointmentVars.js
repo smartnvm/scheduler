@@ -7,4 +7,5 @@ export const icons = {
   
 }
 
+export const DELAY = 1000;
 // export default images ---> does NOT work in storybook

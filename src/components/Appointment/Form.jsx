@@ -21,11 +21,11 @@ export default function Form(props) {
 	};
 
 
-  const fnInput = (event) => {
+  const fnCaptureInput = (event) => {
      setStudent(event.target.value)
   }
 
-  const fnsetInterviewer = (name) => {
+  const fnSetInterviewer = (name) => {
     setInterviewer(prev => name)
  }
 	// InterviewerList(props)
@@ -33,7 +33,7 @@ export default function Form(props) {
 	const vars = {
 		interviewers: interviewers,
 		value: interviewer,
-		onChange: fnsetInterviewer,
+		onChange: fnSetInterviewer,
 	};
 
   console.log('---[Form Vars]....',vars);
@@ -47,7 +47,7 @@ export default function Form(props) {
             type="text"
             placeholder="Enter Student Name"
             value={student}
-            onChange={fnInput}
+            onChange={fnCaptureInput}
 					/>
 				</form>
 				<InterviewerList {...vars} />
