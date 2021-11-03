@@ -4,7 +4,7 @@ import React from 'react';
 import { icons } from '../../data/AppointmentVars';
 
 export default function Error(props) {
-	const { message } = props;
+	const { message, errClose } = props;
 
 	return (
 		<main className="appointment__card appointment__card--error">
@@ -14,7 +14,7 @@ export default function Error(props) {
 			</section>
 			<img
 				className="appointment__error-close"
-				src={icons.close}
+				src={icons.close} onClick={errClose}
 				alt="Close"
 			/>
 		</main>

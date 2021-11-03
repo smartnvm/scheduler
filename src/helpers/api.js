@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+
 import axios from "axios";
+import { DELAY } from '../data/AppointmentVars';
 
 export const fetchData = () => {
-
   return Promise.all([
     axios.get("/api/days"),
     axios.get("/api/appointments"),
@@ -15,41 +15,29 @@ export const fetchData = () => {
     .catch(error => `Error: ${error}`);
 };
 
-
-export const useApiCall = () => {
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {
-      "1": {
-        id: 1,
-        time: "12pm",
-        interview: null
-      }
-    },
-    interviewers: {}
-  });
-
-  const param = ''
-  const resetdB = () => { param = 'reset'; };
-  const fetchDays = () => { param = 'days'; };
-  const fetchAppts = () => { param = 'appts'; };
-
-  // const apiCall = (param) => {
+export function apiCall(param, setStatus, setState) {
   const apiURL = {
-    //Q) works without absolute http://localhost:8001 path
     days: '/api/days/',
     appts: '/api/appointments/',
-    reset: '/api/debug/reset'
+    reset: '/api/debug/reset',
   };
-  console.log(param, '\n', apiURL[param]);
+  console.log(param, ':', apiURL[param]);
+  
+  // param === 'reset' ?
+  //   setStatus((prev) => ({ ...prev, loading: true })) :
+  //   setStatus((prev) => ({ ...prev, loading: false }));
 
-  axios.get(apiURL[param])
+  setStatus((prev) =>
+    param === 'reset'
+      ? { ...prev, loading: true }
+      : { ...prev, loading: false });
+
+  axios
+    .get(apiURL[param])
     .then((res) => {
-      // console.log('------ [old] --------', state.day );
       console.log(res.data);
       fetchData()
-        .then(all => {
+        .then((all) => {
           setState((prev) => ({
             ...prev,
             day: '',
@@ -59,117 +47,15 @@ export const useApiCall = () => {
           }));
         })
         .then(() => {
-          setState((prev) => ({
-            ...prev,
-            day: "Monday",
-          }));
+          setTimeout(() => {
+            setState((prev) => ({ ...prev, day: 'Monday' }));
+            setStatus((prev) => ({ ...prev, loading: false }));
+          },
+            param === 'reset' ? DELAY : 0
+          );
         });
     })
     .catch((error) => {
       console.log(`Error: ${error}`);
     });
-
-  return (fetchAppts, fetchDays, resetdB);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const useTodoData = () => {
-//   const [todos, setTodos] = useState({
-//     data: [],
-//     loading: true,
-//     error: false
-//   });
-
-//   // const singleTodo = todos[2];
-
-//   useEffect(() => {
-//     axios.get('/api/todos')
-//       .then(res => {
-//         const appData = {
-//           data: res.data,
-//           loading: false,
-//           error: false
-//         };
-//         setTodos(appData);
-//       });
-//   }, []);
-
-//   const updateTodo = (id) => {
-//     return axios.patch(`/api/todos/${id}`)
-//       .then(res => {
-//         console.log(res);
-//         const index = todos.data.findIndex(todo => todo.id === id);
-//         const selectedTodo = todos.data.find(todo => todo.id === id);
-//         const updatedTodo = { ...selectedTodo, done: !selectedTodo.done };
-//         const updatedTodos = [...todos.data.slice(0, index), updatedTodo, ...todos.data.slice(index + 1)];
-//         setTodos(prev => ({
-//           ...prev,
-//           data: updatedTodos
-//         }));
-//       });
-//   };
-
-
-//   const deleteTodo = (id) => {
-//     return axios.delete(`/api/todos/${id}`)
-//       .then(res => {
-//         console.log(res);
-//         const index = todos.data.findIndex(todo => todo.id === id);
-//         const updatedTodos = [...todos.data.slice(0, index), ...todos.data.slice(index + 1)];
-//         setTodos(prev => ({
-//           ...prev,
-//           data: updatedTodos
-//         }));
-//       });
-//   };
-
-//   const addTodo = (todoValue) => {
-//     return axios.post('/api/todos', { task: todoValue })
-//       .then(res => {
-//         console.log(res);
-//         setTodos(prev => (
-//           {
-//             ...prev,
-//             data: [...prev.data, res.data]
-//           }
-//         ));
-//       });
-//   };
-
-//   return { todos, updateTodo, deleteTodo, addTodo };
-// };
-
