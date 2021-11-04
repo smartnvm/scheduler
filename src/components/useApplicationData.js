@@ -75,6 +75,7 @@ export default function useApplicationData(props) {
       setState((prev) => ({ ...prev, appointments }));
       const days = updateSpots(state, appointments, id);
       setState((prev) => ({ ...prev, days }));
+      return res
     })
   }
 

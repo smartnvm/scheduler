@@ -42,10 +42,12 @@ export default function Form(props) {
 
 
   const fnCaptureInput = (event) => {
+     setErrName(prev => false)
      setStudent(event.target.value)
   }
 
   const fnSetInterviewer = (name) => {
+    setErrSelect(pre=>false)
     setInterviewer(prev => name)
  }
 	// InterviewerList(props)
