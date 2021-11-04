@@ -1,11 +1,12 @@
 import React from 'react';
-import 'components/InterviewerListItem.scss';
-
+import PropTypes from 'prop-types';
 import InterviewerListItem from './InterviewerListItem';
+
+import 'components/InterviewerListItem.scss';
 
 export default function InterviewerList(props) {
 	const { interviewers, value, onChange } = props;
-
+  
 	const parsedInterviewersList = interviewers.map((elem) => {
 		const vars = {
 			// Warning: Each child in a list should have a unique "key" prop.
@@ -20,7 +21,7 @@ export default function InterviewerList(props) {
       onChange: onChange,
 
 		};
-    console.log('----[InterviewerList vars]-------',vars);
+    // console.log('----[InterviewerList vars]-------',vars);
     return <InterviewerListItem {...vars}></InterviewerListItem>;
   });
   
@@ -33,3 +34,7 @@ export default function InterviewerList(props) {
 		</section>
 	);
 }
+
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired
+};

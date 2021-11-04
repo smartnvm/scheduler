@@ -18,7 +18,7 @@ import useApplicationData from './useApplicationData';
 
 export default function Application(props) {
 
-  const { state, status, fnSetDay, bookInterview, deleteInterview,
+  const { state, loading, fnSetDay, bookInterview, deleteInterview,
     resetdB, fetchDays, fetchAppts } = useApplicationData();
 
 
@@ -29,7 +29,7 @@ export default function Application(props) {
     dayList: state.days,
     day: state.day,
     onChange: fnSetDay,
-    status
+    loading
   };
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -45,7 +45,7 @@ export default function Application(props) {
       bookInterview: bookInterview,
       deleteInterview: deleteInterview,
       state,
-      status
+      loading
     };
     return <Appointment {...appointment} />;
   });
@@ -61,7 +61,7 @@ export default function Application(props) {
       </section>
 
       <section className="schedule">
-        {!status.loading ?
+        {!loading ?
           <>
             {/* <Appointment key="lasta" time="9am" />
           <Appointment key="lastb" time="10am" />

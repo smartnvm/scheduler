@@ -29,8 +29,8 @@ export function apiCall(param, setStatus, setState) {
 
   setStatus((prev) =>
     param === 'reset'
-      ? { ...prev, loading: true }
-      : { ...prev, loading: false });
+      ? true
+      : false)
 
   axios
     .get(apiURL[param])
@@ -49,7 +49,7 @@ export function apiCall(param, setStatus, setState) {
         .then(() => {
           setTimeout(() => {
             setState((prev) => ({ ...prev, day: 'Monday' }));
-            setStatus((prev) => ({ ...prev, loading: false }));
+            setStatus((prev) => false) //({ ...prev, loading: false }));
           },
             param === 'reset' ? DELAY : 0
           );

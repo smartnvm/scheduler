@@ -2,10 +2,9 @@ import React from 'react';
 import 'components/DayListItem.scss';
 
 import classNames from 'classnames';
-import Status from '../components/Appointment/Status';
 export default function DayListItem(props) {
 	// console.log(props);
-	const { name, spots, onChange, selected, status } = props;
+	const { name, spots, onChange, selected, loading } = props;
 	let dayList = 'day-list__item';
 
 	dayList = classNames(
@@ -27,11 +26,11 @@ export default function DayListItem(props) {
 		<li className={dayList} onClick={handleDay}>
       <h2 className="text--regular">{name}</h2>
       
-      {!status.loading && ( 
+      {!loading && ( 
         <>
-          {spots > 1 && <h3 className="text--light">{spots} spots remaining</h3>}
-          {spots === 1 && <h3 className="text--light">{spots} spot remaining</h3>}
           {!spots && <h3 className="text--light">no spots remaining</h3>}
+          {spots === 1 && <h3 className="text--light">{spots} spot remaining</h3>}
+          {spots > 1 && <h3 className="text--light">{spots} spots remaining</h3>}
         </>
       )}
 		</li>

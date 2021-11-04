@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 
 //dummy data source
@@ -36,16 +36,16 @@ export default function useApplicationData(props) {
   However, for React to have the updated data in the state, 
   you need to reload the app at least once so it triggers the axios requests.
   If the data is not being updated after that app reload, then it's something else.*/
-  const [status, setStatus] = useState({ loading: false });
+  const [loading, setLoading] = useState(false);
 
   function resetdB() {
-    apiCall('reset', setStatus, setState);
+    apiCall('reset', setLoading, setState);
   }
   function fetchDays() {
-    apiCall('days',setStatus, setState);
+    apiCall('days',setLoading, setState);
   }
   function fetchAppts() {
-    apiCall('appts', setStatus, setState);
+    apiCall('appts', setLoading, setState);
   }
   
   useEffect(() => {
@@ -111,7 +111,7 @@ export default function useApplicationData(props) {
 
   return {
     state,
-    status,
+    loading,
     fnSetDay,
     bookInterview,
     deleteInterview,
