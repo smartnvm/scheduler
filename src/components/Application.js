@@ -18,13 +18,12 @@ import useApplicationData from './useApplicationData';
 
 export default function Application(props) {
 
+  //custom hook separate state logic from app rendering
   const { state, loading, fnSetDay, bookInterview, deleteInterview,
     resetdB, fetchDays, fetchAppts } = useApplicationData();
 
 
   //SideNav child component properties required
-  //<DayList daysList={daysList} day={day} setDay={setDay} />
-  //update
   const sideNavProps = {
     dayList: state.days,
     day: state.day,
@@ -32,10 +31,16 @@ export default function Application(props) {
     loading
   };
 
+  //helper function retrieves appointments for selected day in the sideNavBar
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  //helper function retrieves interviewer list for the selected day
   const interviewers = getInterviewersForDay(state, state.day);
 
+  //iterate over appointments array for selected day 
   const parsedAppointments = dailyAppointments.map((e) => {
+
+    //assemble Appointment props
     const appointment = {
       key: e.id,
       id: e.id,
@@ -50,10 +55,6 @@ export default function Application(props) {
     return <Appointment {...appointment} />;
   });
 
-  // console.log('0000000000000',dailyAppointments)
-  // dailyAppointments.push(<Appointment key="last" time="5pm" />);
-  //              //  .push(<Appointment key="last" time="5pm" />)
-  // console.log('1111111111111',dailyAppointments)
   return (
     <main className="layout">
       <section className="sidebar">
@@ -63,25 +64,20 @@ export default function Application(props) {
       <section className="schedule">
         {!loading ?
           <>
-            {/* <Appointment key="lasta" time="9am" />
-          <Appointment key="lastb" time="10am" />
-          <Appointment key="lastc" time="11am" /> */}
-
             {parsedAppointments}
 
-            {/* to show last interview - does not work with push ? */}
-
             <Appointment key="last" time="5pm" />
-            {/* <Appointment key="laste" time="6pm" /> */}
           </>
           : <Status message='Database reset ...' />
         }
       </section>
 
       <span>
+        {/* api call buttons for testing*/}
         <Button danger onClick={resetdB}>dB Reset</Button>
-        <Button confirm onClick={fetchDays}>fetch Days</Button>
-        <Button warning onClick={fetchAppts}>fetch Appts</Button>
+
+        {/* <Button confirm onClick={fetchDays}>fetch Days</Button>
+        <Button warning onClick={fetchAppts}>fetch Appts</Button> */}
       </span>
     </main>
   );

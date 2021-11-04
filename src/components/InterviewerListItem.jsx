@@ -14,7 +14,6 @@ export default function InterviewerListItem(props) {
     {'interviewers__item--selected': selected});
 
   	// console.log(interviewersList);
-
   
 	const handleInterviewer = () => {
 		onChange(id);
@@ -27,7 +26,7 @@ export default function InterviewerListItem(props) {
 				className="interviewers__item-image"
 				src={avatar}
         alt={name}
-        data-testid={'icon_'+id}
+        data-testid={'icon_'+id}  // add data-testid to facilitate jest testing
 			/>
 			{selected && name}
 		</li>

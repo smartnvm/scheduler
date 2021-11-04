@@ -26,16 +26,6 @@ export default function useApplicationData(props) {
     interviewers: {},
   });
 
-  /*************************************************** */
-  /*dominic_t 
-  In React, the single source of truth is the state.
-  When React loads, it's triggering the Axios requests in the useEffect hook and populate 
-  the state with the data from the db. All the props value are coming from the state data.
-  React will re-render whenever the state data changes (when you call setState somewhere)
-  When running npm run db:reset you're resetting the data of the db. 
-  However, for React to have the updated data in the state, 
-  you need to reload the app at least once so it triggers the axios requests.
-  If the data is not being updated after that app reload, then it's something else.*/
   const [loading, setLoading] = useState(false);
 
   function resetdB() {
@@ -68,45 +58,51 @@ export default function useApplicationData(props) {
   };
 
   function deleteInterview(id) {
+   //construct appointment copy for the specified [id] and set interview to null 
     const appointment = {
       ...state.appointments[id],
       interview: null,
     };
 
+    //consturct new appointment object and over-ride with appointment of empty interview
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
 
+    //presist the changes and make DELETE api request 
     return axios.delete(`/api/appointments/${id}`).then((res) => {
       setState((prev) => ({ ...prev, appointments }));
       const days = updateSpots(state, appointments, id);
       setState((prev) => ({ ...prev, days }));
     })
-    // .catch(error => error);
   }
 
+  //create new interview 
   function bookInterview(id, interview) {
-    // console.log(id, interview);
+    //construct a new appointment object with new interview data
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
     };
 
+    //construct appointments object copy and only replace appointment with specified id
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-
+    
+    // make a PUT request with interview data to make presistent changes
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((res) => {
-        // const x = 'shanna'
+       //manage local state
         setState((prev) => ({ ...prev, appointments }));
+        
+        //
         const days = updateSpots(state, appointments, id);
         setState((prev) => ({ ...prev, days }));
         return res;
       })
-    // .catch(error => error);
   }
 
   return {

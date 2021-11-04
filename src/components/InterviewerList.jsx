@@ -12,14 +12,12 @@ export default function InterviewerList(props) {
 			// Warning: Each child in a list should have a unique "key" prop.
 			key: elem.id,
 
-			// InterviewerListItem(props)
-      // const { name, avatar, selected, onChange } 
+			//assemble InterviewerListItem(props)
       name: elem.name,
       id: elem.id,
       avatar: elem.avatar,
       selected: value === elem.id,
       onChange: onChange,
-
 		};
     // console.log('----[InterviewerList vars]-------',vars);
     return <InterviewerListItem {...vars}></InterviewerListItem>;
@@ -34,7 +32,7 @@ export default function InterviewerList(props) {
 		</section>
 	);
 }
-
+//prop type checking
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired
 };

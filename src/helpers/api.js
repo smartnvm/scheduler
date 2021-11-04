@@ -2,6 +2,7 @@
 import axios from "axios";
 import { DELAY } from '../data/AppointmentVars';
 
+//api call to fetch data and returns a promise
 export const fetchData = () => {
   return Promise.all([
     axios.get("/api/days"),
@@ -15,7 +16,8 @@ export const fetchData = () => {
     .catch(error => `Error: ${error}`);
 };
 
-export function apiCall(param, setStatus, setState) {
+//helper function to make different api calls for testing
+export function apiCall(param, setLoading, setState) {
   const apiURL = {
     days: '/api/days/',
     appts: '/api/appointments/',
@@ -23,19 +25,18 @@ export function apiCall(param, setStatus, setState) {
   };
   console.log(param, ':', apiURL[param]);
   
-  // param === 'reset' ?
-  //   setStatus((prev) => ({ ...prev, loading: true })) :
-  //   setStatus((prev) => ({ ...prev, loading: false }));
-
-  setStatus((prev) =>
+  //controls if loading spinner displays
+  setLoading((prev) =>
     param === 'reset'
       ? true
       : false)
 
+  //make api call for the specified parameter
   axios
     .get(apiURL[param])
     .then((res) => {
       console.log(res.data);
+      //fetch all data at once
       fetchData()
         .then((all) => {
           setState((prev) => ({
@@ -46,10 +47,12 @@ export function apiCall(param, setStatus, setState) {
             interviewers: all[2].data,
           }));
         })
+        //because state has more parameters, it's important to have a .then  
+        //this ensures proper rendering
         .then(() => {
           setTimeout(() => {
             setState((prev) => ({ ...prev, day: 'Monday' }));
-            setStatus((prev) => false) //({ ...prev, loading: false }));
+            setLoading((prev) => false) 
           },
             param === 'reset' ? DELAY : 0
           );

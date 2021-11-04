@@ -7,6 +7,7 @@ export default function DayListItem(props) {
 	const { name, spots, onChange, selected, loading } = props;
 	let dayList = 'day-list__item';
 
+  //add conditional css styling 
 	dayList = classNames(
 		dayList,
 		{ 'day-list__item--full': !spots },
@@ -16,8 +17,6 @@ export default function DayListItem(props) {
 	// Now we invoke onChange functionw onClick event
 	const handleDay = () => {
 		// pass (name) to onChange function reference
-		// prevents a day with 0 spots to be clicked
-		// if (spots > 0)
 		onChange(name);
 	};
 
@@ -25,7 +24,7 @@ export default function DayListItem(props) {
 	return (
 		<li className={dayList} onClick={handleDay}>
       <h2 className="text--regular">{name}</h2>
-      
+      {/* conditional rendering to hide spots during dB reset */}
       {!loading && ( 
         <>
           {!spots && <h3 className="text--light">no spots remaining</h3>}

@@ -7,14 +7,8 @@ export default function Button(props) {
   // console.log(props);
   //base button class
   let buttonClass = 'button';
-  // if (confirm) {
-  //   buttonClass += ' button--confirm';
-  // }
-  // if (danger) {
-  //   buttonClass += ' button--danger';
-  // }
-
-
+  
+  //add condiontal styling
    buttonClass = (classNames(buttonClass,
     { 'button--confirm': confirm },
      { 'button--warning': warning },
