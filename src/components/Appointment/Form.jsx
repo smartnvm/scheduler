@@ -10,8 +10,22 @@ export default function Form(props) {
 	const [student, setStudent] = useState(props.student || '');
 	const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
-	const fnSave = () => {
-    onSave(student, interviewer);
+  const [error, setError ]= useState({student: false, interviewer: false})
+  
+  const fnSave = () => {
+
+      if (!student) {
+        setError((prev) => ({ ...prev, student: true }));
+        return;
+      }
+      if (!interviewer) {
+        setError((prev) => ({ ...prev, interviewer: true }));
+        return;
+      }
+    
+      setError(prev => ({...prev, student: false, interviewer: false}))
+      props.onSave(student, interviewer);
+    
   };
   
 	const fnCancel = () => {
@@ -41,14 +55,18 @@ export default function Form(props) {
 		<main className="appointment__card appointment__card--create">
 			<section className="appointment__card-left">
 				<form autoComplete="off" onSubmit={event => event.preventDefault()}>
-					<input
+					<>
+          <input
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
             placeholder="Enter Student Name"
             value={student}
             onChange={fnCaptureInput}
-					/>
+          />
+            {error.student && <div className="appointment__validation"> &#10060; Error: student name cannot be empty!</div>}
+            {error.interviewer && <div className ="appointment__validation"> &#10060; Error: Oopps you forgot to select an interviewer!</div>}
+          </>
 				</form>
 				<InterviewerList {...vars} />
 			</section>

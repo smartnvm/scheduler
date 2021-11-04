@@ -1,5 +1,5 @@
-import DayListItem from './DayListItem';
 import React, { useState } from 'react';
+import DayListItem from './DayListItem';
 
 export default function DayList(props) {
 	// console.log(props);
@@ -21,7 +21,7 @@ export default function DayList(props) {
 
   // here we assemble the props object first, i.e. var = {}
   // require to spread the object props prior to passing {...vars} 
-  const { dayList, day, onChange } = props
+  const { dayList, day, onChange, status } = props
 	
   const parsedDayList = dayList.map((elem) => {
     
@@ -36,7 +36,8 @@ export default function DayList(props) {
       //pass onChange reference to DayListItem child
       //state is managed two levels up in main Application 
       onChange: onChange,
-			selected: elem.name === day,
+      selected: elem.name === day,
+      status,
 		};
 
     return (

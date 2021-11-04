@@ -27,7 +27,7 @@ const ERR_DELETE = 'ERR_DELETE';
 export default function Appointment(props) {
 
 
-  const { state, time, interview, interviewers, bookInterview, id, deleteInterview } = props;
+  const {  time, interview, interviewers, bookInterview, id, deleteInterview } = props;
 
   // console.log('form interview', interview)
 
@@ -39,10 +39,10 @@ export default function Appointment(props) {
   const fnAdd = (param) => {
     // console.log(param);
     transition(CREATE);
-  
+
   };
 
-  const fnEdit = (student, interviewer) => {
+  const fnEdit = () => {
     transition(EDIT);
   };
 
@@ -52,15 +52,16 @@ export default function Appointment(props) {
 
   };
   const fnConfirmDelete = () => {
-    transition(DELETE,true);
+    transition(DELETE, true);
     deleteInterview(id, interview)
       .then((res) => {
         console.log('--------------[DELETE]-------', res);
         transition(EMPTY);
-       
+
       })
-      .catch(error => transition(ERR_DELETE,true));
+      .catch(error => transition(ERR_DELETE, true));
   };
+
 
   function save(name, interviewer) {
     const interview = {
@@ -68,11 +69,12 @@ export default function Appointment(props) {
       interviewer
     };
 
+
     //updating old state variable wiht new appointment info
     transition(SAVE);
     bookInterview(id, interview)
       .then((res) => {
-        console.log('--------------[SAVE]-------\n',res);
+        console.log('--------------[SAVE]-------\n', res);
         transition(SHOW);
       })
       .catch(error => transition(ERR_SAVE, true));
@@ -92,8 +94,8 @@ export default function Appointment(props) {
     interviewer: mode === EDIT ? interview.interviewer.id : '',
     interviewers: interviewers,
     onSave: save,
-    onCancel: () => back()
-  };
+    onCancel: () => back(),
+    };
 
 
   // console.log('------[showProps]-----', showProps);

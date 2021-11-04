@@ -17,7 +17,7 @@ import {
 import useApplicationData from './useApplicationData';
 
 export default function Application(props) {
-  
+
   const { state, status, fnSetDay, bookInterview, deleteInterview,
     resetdB, fetchDays, fetchAppts } = useApplicationData();
 
@@ -29,6 +29,7 @@ export default function Application(props) {
     dayList: state.days,
     day: state.day,
     onChange: fnSetDay,
+    status
   };
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -43,7 +44,8 @@ export default function Application(props) {
       interviewers,
       bookInterview: bookInterview,
       deleteInterview: deleteInterview,
-      state: state,
+      state,
+      status
     };
     return <Appointment {...appointment} />;
   });
@@ -59,19 +61,21 @@ export default function Application(props) {
       </section>
 
       <section className="schedule">
-        <>
-          {/* <Appointment key="lasta" time="9am" />
+        {!status.loading ?
+          <>
+            {/* <Appointment key="lasta" time="9am" />
           <Appointment key="lastb" time="10am" />
           <Appointment key="lastc" time="11am" /> */}
 
-          {parsedAppointments}
+            {parsedAppointments}
 
-          {/* to show last interview - does not work with push ? */}
+            {/* to show last interview - does not work with push ? */}
 
-          <Appointment key="last" time="5pm" />
-          {/* <Appointment key="laste" time="6pm" /> */}
-        </>
-        {status.loading && <Status message='Database reset ...' />}
+            <Appointment key="last" time="5pm" />
+            {/* <Appointment key="laste" time="6pm" /> */}
+          </>
+          : <Status message='Database reset ...' />
+        }
       </section>
 
       <span>
